@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/theme_page"
+    tools:context=".SignUpActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign Up"
+                    android:layout_gravity="center"
+                    android:layout_span="2"
+                    android:textSize="30sp"
+                    android:textColor="@color/maroon_dark"
+                    android:textStyle="bold"/>
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="25dp">
+
+                <EditText
+                    android:id="@+id/etUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:drawableLeft="@drawable/ic_person"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/background_edittext"
+                    android:hint="User Name"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/background_edittext"
+                    android:hint="Email Address"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:background="@drawable/background_edittext"
+                    android:hint="Password"
+                    android:drawableLeft="@drawable/ic_lock"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/etConPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:background="@drawable/background_edittext"
+                    android:hint="Confirm Password"
+                    android:drawableLeft="@drawable/ic_lock"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:background="@drawable/background_edittext"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:drawableLeft="@drawable/ic_call"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:background="@drawable/background_edittext"
+                    android:hint="Address"
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:drawableLeft="@drawable/ic_address"
+                    android:drawablePadding="10dp"
+                    android:scrollbars="horizontal"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp">
+
+                <Spinner
+                    android:id="@+id/spCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="7dp"
+                    android:layout_span="1" />
+
+                <EditText
+                    android:id="@+id/etPincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_span="1"
+                    android:background="@drawable/background_edittext"
+                    android:hint="Pincode"
+                    android:drawableLeft="@drawable/ic_pincode"
+                    android:drawablePadding="10dp"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow android:layout_marginTop="20dp">
+
+                <Button
+                    android:id="@+id/btnSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="2"
+                    android:background="@drawable/background_button"
+                    android:text="Sign Up"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvGotoSignIn"
+                    android:text="Already have an Account ? Sign In"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_span="2"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+
+</LinearLayout>
