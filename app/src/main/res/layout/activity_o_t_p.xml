@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
-    android:background="@color/theme_page"
-    android:paddingHorizontal="30dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
     tools:context=".OTPActivity">
 
     <TextView
@@ -21,69 +20,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/etOTP1"
-            android:layout_width="wrap_content"
+            android:id="@+id/etOTP"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/background_otp_edittext"
-            android:gravity="center"
-            android:maxLength="1"
+            android:background="@drawable/background_edittext"
+            android:hint="Enter OTP"
             android:inputType="number"
+            android:maxLength="4"
             android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etOTP2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_otp_edittext"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etOTP3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_otp_edittext"
-            android:gravity="center"
-            android:maxLength="1"
-            android:inputType="number"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/etOTP4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_weight="1"
-            android:background="@drawable/background_otp_edittext"
-            android:gravity="center"
-            android:maxLength="1"
-            android:inputType="number"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvResend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="10dp"
-        android:text="Didn't Get OTP ? Resend" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvResend"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="right"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:text="Didn't Get OTP ? Resend" />-->
 
     <Button
         android:id="@+id/btnVerify"

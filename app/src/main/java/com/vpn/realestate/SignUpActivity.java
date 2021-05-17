@@ -44,12 +44,15 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText etUserName, etEmail, etPassword, etConPassword, etMobile, etAddress, etPincode;
+    EditText etUserName, etEmail, etPassword, etConPassword, etMobile, etAddress;
     TextView tvGotoSignIn;
-    Spinner spCity;
+    Spinner spCity, spArea;
     Button btnSignUp;
     String cityName;
+    String[] areaSelected;
+
     ArrayList<String> cityList = new ArrayList<>();
+    ArrayList<String> areaList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +69,9 @@ public class SignUpActivity extends AppCompatActivity {
         etConPassword = findViewById(R.id.etConPassword);
         etMobile = findViewById(R.id.etMobile);
         etAddress = findViewById(R.id.etAddress);
-        etPincode = findViewById(R.id.etPincode);
 
         spCity = findViewById(R.id.spCity);
+        spArea = findViewById(R.id.spArea);
 
         btnSignUp = findViewById(R.id.btnSignUp);
 
@@ -96,11 +99,25 @@ public class SignUpActivity extends AppCompatActivity {
         //set the spinner value
         fillCitySpinner();
 
-        //set spinner value to send to database
+        //set city spinner value to send to database
         spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cityName = cityList.get(position);
+                fillArea();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //set area spinner value
+        spArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                areaSelected = areaList.get(position).split("-", 2);
             }
 
             @Override
@@ -115,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (checkUserName() && checkEmail() && checkPassword() && checkConPassword()
-                        && checkMobile() && checkAddress() && checkPincode()) {
+                        && checkMobile() && checkAddress()) {
 
                     sendSignUpRequest();
 
@@ -125,6 +142,75 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void fillArea() {
+
+        //fill area spinner
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURL.CITY_AREA_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                parseJSONArea(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put(JSONField.CITY_NAME, cityName);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(SignUpActivity.this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void parseJSONArea(String response) {
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            int success = jsonObject.optInt(JSONField.SUCCESS);
+
+            if (success == 1) {
+
+                JSONArray jsonArray = jsonObject.getJSONArray(JSONField.AREA_ARRAY);
+
+
+                if (jsonArray.length() > 0) {
+
+                    areaList.clear();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject objArea = jsonArray.getJSONObject(i);
+
+                        String areaPincode = objArea.optString(JSONField.AREA_PINCODE);
+                        String areaName = objArea.optString(JSONField.AREA_NAME);
+
+                        areaList.add(areaName + "-" + areaPincode);
+
+                        //set area values
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(SignUpActivity.this, android.R.layout.simple_list_item_1, areaList);
+                        spArea.setAdapter(adapter);
+
+                    }
+
+                }
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -150,8 +236,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         try {
             JSONObject jsonObject = new JSONObject(response);
-            int flag = jsonObject.optInt(JSONField.FLAG);
-            if (flag == 1) {
+            int success = jsonObject.optInt(JSONField.SUCCESS);
+
+            if (success == 1) {
 
                 JSONArray jsonArray = jsonObject.optJSONArray(JSONField.CITY_ARRAY);
 
@@ -205,7 +292,7 @@ public class SignUpActivity extends AppCompatActivity {
                 params.put(JSONField.USER_PASSWORD, etPassword.getText().toString());
                 params.put(JSONField.USER_MOBILE, etMobile.getText().toString());
                 params.put(JSONField.USER_ADDRESS, etAddress.getText().toString());
-                params.put(JSONField.AREA_PINCODE, etPincode.getText().toString());
+                params.put(JSONField.AREA_PINCODE, areaSelected[1]);
                 params.put(JSONField.CITY_NAME, cityName);
 
                 return params;
@@ -229,6 +316,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 Log.d("TEG", "Sign Up success...");
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+                //moveing to sign in screen
                 Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                 startActivity(intent);
 
@@ -337,20 +425,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return isValidAddress;
-    }
-
-    //pincode validation
-    private boolean checkPincode() {
-
-        boolean isValidPincode = false;
-
-        if (etPincode.getText().toString().trim().length() <= 0) {
-            etPincode.setError("Enter Pincode");
-        } else {
-            isValidPincode = true;
-        }
-
-        return isValidPincode;
     }
 
 }

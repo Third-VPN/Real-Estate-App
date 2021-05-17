@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingHorizontal="5dp"
-    android:background="@color/theme_page"
+    android:paddingHorizontal="16dp"
     tools:context=".SignInActivity">
 
     <TextView

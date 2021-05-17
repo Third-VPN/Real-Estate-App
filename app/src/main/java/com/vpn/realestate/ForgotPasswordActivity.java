@@ -6,17 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Random;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     EditText etMobile;
@@ -66,7 +68,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 if (!mobile.equals("")) {
 
-                    Intent intent = new Intent(ForgotPasswordActivity.this, PasswordRecoveryActivity.class);
+                    Random random = new Random();
+                    int OTP = random.nextInt(9999);
+                    String msg = "Your OTP is : " + OTP;
+
+                    SmsManager sms = SmsManager.getDefault();
+                    sms.sendTextMessage(mobile, null, msg, null, null);
+
+                    Intent intent = new Intent(ForgotPasswordActivity.this, OTPActivity.class);
+                    intent.putExtra("OTP", OTP);
                     startActivity(intent);
 
                 } else {

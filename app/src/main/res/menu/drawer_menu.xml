@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_Search"
+            android:icon="@drawable/ic_search"
+            android:title="Search Property" />
+
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@drawable/ic_add_property"
+            android:title="Add Property" />
+
+        <item
+            android:id="@+id/nav_Bookmark"
+            android:icon="@drawable/ic_bookmark_fill"
+            android:title="Bookmarks" />
+
+        <item
+            android:id="@+id/nav_Activity"
+            android:icon="@drawable/ic_activity_log"
+            android:title="My Activity" />
+
+        <item
+            android:id="@+id/nav_Profile"
+            android:icon="@drawable/ic_person"
+            android:title="My Profile" />
+
+        <item
+            android:id="@+id/nav_RateUs"
+            android:icon="@drawable/ic_rate_us"
+            android:title="Rate Us" />
+
+    </group>
+
+    <item
+        android:id="@+id/nav_LogOut"
+        android:icon="@drawable/ic_exit_to_app"
+        android:title="Log out" />
+
+</menu>

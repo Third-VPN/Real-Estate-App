@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="theme_page">#FFF7F0</color>
     <color name="blue">#1C54DF</color>
+    <color name="green">#49A806</color>
+    <color name="grey">#888887</color>
+
 </resources>
