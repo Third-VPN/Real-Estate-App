@@ -96,6 +96,7 @@
                     android:id="@+id/spCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_spinner"
                     android:spinnerMode="dialog" />
 
             </LinearLayout>
@@ -120,6 +121,7 @@
                     android:id="@+id/spArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/background_spinner"
                     android:spinnerMode="dialog" />
 
             </LinearLayout>

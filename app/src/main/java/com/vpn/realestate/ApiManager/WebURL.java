@@ -74,4 +74,16 @@ public class WebURL {
     //update property api update
     public static final String PROPERTY_UPDATE_URL = MAIN_URL + "propertyUpdate.php";
 
+    //get buyers list api select
+    public static final String BUYER_URL = MAIN_URL + "buyerList.php";
+
+    //send owner details to buyer api insert
+    public static final String SEND_OWNER_DETAILS_URL = MAIN_URL + "sendOwnerDetails.php";
+
+    //get owner details api select
+    public static final String GET_OWNER_DETAILS_URL = MAIN_URL + "getOwnerDetails.php";
+
+    //send feedback api insert
+    public static final String FEEDBACK_URL = MAIN_URL + "feedback.php";
+
 }

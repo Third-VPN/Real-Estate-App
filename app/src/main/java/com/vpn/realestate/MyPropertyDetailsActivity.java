@@ -33,10 +33,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContactedPropertyDetailsActivity extends AppCompatActivity {
+public class MyPropertyDetailsActivity extends AppCompatActivity {
     RecyclerView rvPropertyPhoto;
     TextView tvPrice, tvPropertyName, tvPropertyType, tvBHK, tvSQFTCarpet, tvSQFTCovered, tvCity, tvArea, tvAddress, tvPropertyDesc;
-    Button btnViewRes;
+    Button btnViewBuyers;
 
     String propertyId;
 
@@ -47,7 +47,7 @@ public class ContactedPropertyDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //removing action bar
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_contacted_property_details);
+        setContentView(R.layout.activity_my_property_details);
 
         rvPropertyPhoto = findViewById(R.id.rvPropertyPhoto);
 
@@ -62,24 +62,23 @@ public class ContactedPropertyDetailsActivity extends AppCompatActivity {
         tvAddress = findViewById(R.id.tvAddress);
         tvPropertyDesc = findViewById(R.id.tvPropertyDesc);
 
-        btnViewRes = findViewById(R.id.btnViewRes);
+        btnViewBuyers = findViewById(R.id.btnViewBuyers);
 
         Intent intent = getIntent();
         propertyId = intent.getStringExtra("ID");
 
-        LinearLayoutManager manager = new LinearLayoutManager(ContactedPropertyDetailsActivity.this);
+        LinearLayoutManager manager = new LinearLayoutManager(MyPropertyDetailsActivity.this);
         manager.setOrientation(RecyclerView.HORIZONTAL);
         rvPropertyPhoto.setLayoutManager(manager);
 
         fillPropertyPhotos();
         filPropertyData();
 
-        btnViewRes.setOnClickListener(new View.OnClickListener() {
+        btnViewBuyers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //go to response activity
-                Intent intent1 = new Intent(ContactedPropertyDetailsActivity.this, ResponseActivity.class);
+                Intent intent1 = new Intent(MyPropertyDetailsActivity.this, ViewBuyersActivity.class);
                 intent1.putExtra("ID", propertyId);
                 startActivity(intent1);
 
@@ -114,7 +113,7 @@ public class ContactedPropertyDetailsActivity extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(ContactedPropertyDetailsActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(MyPropertyDetailsActivity.this);
         requestQueue.add(stringRequest);
 
     }
@@ -145,7 +144,7 @@ public class ContactedPropertyDetailsActivity extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue1 = Volley.newRequestQueue(ContactedPropertyDetailsActivity.this);
+        RequestQueue requestQueue1 = Volley.newRequestQueue(MyPropertyDetailsActivity.this);
         requestQueue1.add(stringRequest1);
 
     }
@@ -217,7 +216,7 @@ public class ContactedPropertyDetailsActivity extends AppCompatActivity {
                         propertyPhoto.setProperty_photo(photo);
                         photoList.add(propertyPhoto);
                     }
-                    PropertyPhotoAdapter adapter = new PropertyPhotoAdapter(ContactedPropertyDetailsActivity.this, photoList);
+                    PropertyPhotoAdapter adapter = new PropertyPhotoAdapter(MyPropertyDetailsActivity.this, photoList);
                     rvPropertyPhoto.setAdapter(adapter);
 
                 }

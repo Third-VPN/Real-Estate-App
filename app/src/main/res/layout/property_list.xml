@@ -105,6 +105,7 @@
                     android:layout_alignParentRight="true"
                     android:background="@drawable/custom_bookmark_button"
                     android:textOff=""
+                    android:visibility="gone"
                     android:textOn="" />
 
                 <Button
@@ -116,6 +117,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/background_contact_button"
                     android:text="Contact"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 

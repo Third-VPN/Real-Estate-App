@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.vpn.realestate.Models.Bookmark;
 import com.vpn.realestate.ApiManager.JSONField;
 import com.vpn.realestate.ApiManager.WebURL;
 import com.vpn.realestate.Models.Property;
@@ -34,7 +35,6 @@ import com.vpn.realestate.PropertyContactActivity;
 import com.vpn.realestate.PropertyDetailsActivity;
 import com.vpn.realestate.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,15 +122,16 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
 
                             if (success == 1) {
 
-                                JSONField.propertyIdList.remove(property_id);
-                                for (int i = 0; i < JSONField.propertyIdList.size(); i++) {
-                                    Log.d("PROPERTY ID LIST", JSONField.propertyIdList.get(i));
-                                }
-
                                 String bookmark_id = jsonObject.optString(JSONField.BOOKMARK_ID);
                                 String msg = jsonObject.optString(JSONField.MSG);
 
-                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                                property.setBookmark(false);
+                                Bookmark.propertyIdList.remove(property_id);
+                                Log.d("PROPERTY ID REMOVE", property_id);
+
+                                //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
+                                notifyItemChanged(position, null);
 
                             }
 
@@ -142,7 +143,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
                     }
                 }) {
 
@@ -176,15 +177,16 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
 
                             if (success == 1) {
 
-                                JSONField.propertyIdList.add(property_id);
-                                for (int i = 0; i < JSONField.propertyIdList.size(); i++) {
-                                    Log.d("PROPERTY ID LIST", JSONField.propertyIdList.get(i));
-                                }
-
                                 String bookmark_id = jsonObject.optString(JSONField.BOOKMARK_ID);
                                 String msg = jsonObject.optString(JSONField.MSG);
 
-                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                                property.setBookmark(true);
+                                Bookmark.propertyIdList.add(property_id);
+                                Log.d("PROPERTY ID ADD", property_id);
+
+                                //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
+                                notifyItemChanged(position, null);
 
                             }
 
@@ -196,7 +198,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
                     }
                 }) {
 

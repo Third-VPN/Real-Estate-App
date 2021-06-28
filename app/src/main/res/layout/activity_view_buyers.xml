@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ViewBuyersActivity">
 
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="No Bookmarks"
+        android:text="No Buyer Yet"
         android:textSize="25sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBuyers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvBookmark"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </FrameLayout>

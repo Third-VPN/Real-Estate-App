@@ -83,7 +83,7 @@ public class PropertyDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(PropertyDetailsActivity.this, PropertyContactActivity.class);
-                intent.putExtra("PROPERTY_ID", propertyId);
+                intent.putExtra("ID", propertyId);
                 startActivity(intent);
 
             }

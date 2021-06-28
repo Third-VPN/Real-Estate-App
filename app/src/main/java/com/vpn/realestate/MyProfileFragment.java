@@ -49,6 +49,8 @@ public class MyProfileFragment extends Fragment {
     String user_id, user_name, city, cityArea;
     String[] areaSelected;
 
+    String userAreaPincode, userAreaName, userCity;
+
     ArrayList<String> cityList = new ArrayList<>();
     ArrayList<String> areaList = new ArrayList<>();
 
@@ -205,6 +207,14 @@ public class MyProfileFragment extends Fragment {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, areaList);
                         spArea.setAdapter(adapter);
 
+                        String area1 = userAreaName + "-" + userAreaPincode;
+                        for (int k = 0; k < spArea.getCount(); k++) {
+                            if (spArea.getItemAtPosition(k).toString().equals(area1)) {
+                                spArea.setSelection(k);
+                                break;
+                            }
+                        }
+
                     }
 
                 }
@@ -238,6 +248,13 @@ public class MyProfileFragment extends Fragment {
                         //set city names in spinner
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, cityList);
                         spCity.setAdapter(adapter);
+
+                        for (int k = 0; k < spCity.getCount(); k++) {
+                            if (spCity.getItemAtPosition(k).toString().equals(userCity)) {
+                                spCity.setSelection(k);
+                                break;
+                            }
+                        }
 
                     }
 
@@ -369,9 +386,9 @@ public class MyProfileFragment extends Fragment {
                         String userName = objUser.optString(JSONField.USER_NAME);
                         String userEmail = objUser.optString(JSONField.USER_EMAIL);
                         String userMobile = objUser.optString(JSONField.USER_MOBILE);
-                        String userAreaPincode = objUser.optString(JSONField.AREA_PINCODE);
-                        String userAreaName = objUser.optString(JSONField.AREA_NAME);
-                        String userCity = objUser.optString(JSONField.CITY_NAME);
+                        userAreaPincode = objUser.optString(JSONField.AREA_PINCODE);
+                        userAreaName = objUser.optString(JSONField.AREA_NAME);
+                        userCity = objUser.optString(JSONField.CITY_NAME);
                         String userAddress = objUser.optString(JSONField.USER_ADDRESS);
 
                         etName.setText(userName);

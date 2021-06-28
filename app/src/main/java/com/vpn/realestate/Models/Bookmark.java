@@ -1,4 +1,4 @@
-package com.vpn.realestate.ApiManager;
+package com.vpn.realestate.Models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,17 +14,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.vpn.realestate.ApiManager.JSONField;
+import com.vpn.realestate.ApiManager.WebURL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Bookmark {
     Context context;
     String user_id;
+    //bookmark property list
+    public static ArrayList<String> propertyIdList = new ArrayList<>();
 
     public Bookmark(Context context, String user_id) {
         this.context = context;
@@ -49,14 +54,15 @@ public class Bookmark {
                         JSONArray jsonArray = jsonObject.optJSONArray(JSONField.BOOKMARK_ARRAY);
                         if (jsonArray.length() > 0) {
 
-                            for (int i=0; i< jsonArray.length(); i++) {
+                            propertyIdList.clear();
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject propObj = jsonArray.getJSONObject(i);
 
                                 String propertyId = propObj.getString(JSONField.PROPERTY_ID);
 
-                                JSONField.propertyIdList.add(propertyId);
-                                Log.d("PROPERTY ID LIST", JSONField.propertyIdList.get(i));
+                                propertyIdList.add(propertyId);
+                                Log.d("ID LIST", propertyIdList.get(i));
 
                             }
 
@@ -72,7 +78,7 @@ public class Bookmark {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
             }
         }) {
 

@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -32,9 +34,14 @@ import com.bumptech.glide.Glide;
 import com.vpn.realestate.ApiManager.JSONField;
 import com.vpn.realestate.ApiManager.WebURL;
 import com.vpn.realestate.ContactedPropertyDetailsActivity;
+import com.vpn.realestate.DrawerActivity;
+import com.vpn.realestate.EditPropertyActivity;
 import com.vpn.realestate.Models.Property;
+import com.vpn.realestate.MyPropertyDetailsActivity;
+import com.vpn.realestate.MyPropertyFragment;
 import com.vpn.realestate.PropertyDetailsActivity;
 import com.vpn.realestate.R;
+import com.vpn.realestate.SearchPropertyFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,7 +90,7 @@ public class MyPropertyAdapter extends RecyclerView.Adapter<MyPropertyAdapter.Vi
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, ContactedPropertyDetailsActivity.class);
+                Intent intent = new Intent(context, MyPropertyDetailsActivity.class);
                 intent.putExtra("ID", property_id);
                 context.startActivity(intent);
 
@@ -105,7 +112,11 @@ public class MyPropertyAdapter extends RecyclerView.Adapter<MyPropertyAdapter.Vi
                         switch (item.getItemId()) {
 
                             case R.id.mEdit:
-                                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(context, EditPropertyActivity.class);
+                                intent.putExtra("ID", property_id);
+                                context.startActivity(intent);
+
                                 break;
 
                             case R.id.mDelete:
@@ -133,7 +144,14 @@ public class MyPropertyAdapter extends RecyclerView.Adapter<MyPropertyAdapter.Vi
 
                                                     if (success == 1) {
                                                         String msg = jsonObject.optString(JSONField.MSG);
-                                                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+
+                                                        propertyList.remove(position);
+                                                        notifyItemRemoved(position);
+
+//                                                        Intent intent = new Intent(context, DrawerActivity.class);
+//                                                        context.startActivity(intent);
+                                                        
                                                     }
 
                                                 } catch (JSONException e) {

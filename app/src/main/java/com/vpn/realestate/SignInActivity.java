@@ -47,6 +47,7 @@ public class SignInActivity extends AppCompatActivity {
     public static final String PROFILE = "profile";
     public static final String ID_KEY = "user_id";
     public static final String NAME_KEY = "user_name";
+    public static final String EMAIL_KEY = "user_email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 String userID = jsonObject.optString(JSONField.USER_ID);
                 String userName = jsonObject.optString(JSONField.USER_NAME);
+                String userEmail = jsonObject.optString(JSONField.USER_EMAIL);
                 Log.d("TAG", msg);
 
                 //save user data
@@ -163,6 +165,7 @@ public class SignInActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(ID_KEY, userID);
                 editor.putString(NAME_KEY, userName);
+                editor.putString(EMAIL_KEY, userEmail);
                 editor.commit();
 
                 Log.d("ID", preferences.getString(ID_KEY,""));

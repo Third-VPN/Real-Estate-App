@@ -13,10 +13,10 @@
             android:icon="@drawable/ic_add_property"
             android:title="Add Property" />
 
-        <item
-            android:id="@+id/nav_Bookmark"
-            android:icon="@drawable/ic_bookmark_fill"
-            android:title="Bookmarks" />
+<!--        <item-->
+<!--            android:id="@+id/nav_Bookmark"-->
+<!--            android:icon="@drawable/ic_bookmark_fill"-->
+<!--            android:title="Bookmarks" />-->
 
         <item
             android:id="@+id/nav_Activity"
@@ -27,6 +27,11 @@
             android:id="@+id/nav_Profile"
             android:icon="@drawable/ic_person"
             android:title="My Profile" />
+
+        <item
+            android:id="@+id/nav_ChangePassword"
+            android:icon="@drawable/ic_change_password"
+            android:title="Change Password" />
 
         <item
             android:id="@+id/nav_RateUs"

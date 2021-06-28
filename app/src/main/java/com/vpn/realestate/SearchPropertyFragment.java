@@ -3,11 +3,10 @@ package com.vpn.realestate;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.vpn.realestate.Adapters.PropertyAdapter;
-import com.vpn.realestate.ApiManager.Bookmark;
+import com.vpn.realestate.Models.Bookmark;
 import com.vpn.realestate.ApiManager.JSONField;
 import com.vpn.realestate.ApiManager.WebURL;
 import com.vpn.realestate.Models.Property;
@@ -38,6 +37,7 @@ import java.util.Map;
 
 public class SearchPropertyFragment extends Fragment {
     RecyclerView rvProperty;
+    TextView tvEmpty;
     ArrayList<Property> propertyList;
 
     String user_id;
@@ -50,6 +50,8 @@ public class SearchPropertyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_search_property, container, false);
 
+        tvEmpty = view.findViewById(R.id.tvEmpty);
+
         rvProperty = view.findViewById(R.id.rvProperty);
 
         //set recycler view layout
@@ -60,7 +62,6 @@ public class SearchPropertyFragment extends Fragment {
         user_id = preferences.getString(ID_KEY, "");
 
         //clear bookmark list and fetch new ones
-        JSONField.propertyIdList.clear();
         Bookmark bookmark = new Bookmark(getContext(), user_id);
         bookmark.getBookmarks();
 
@@ -75,7 +76,7 @@ public class SearchPropertyFragment extends Fragment {
         propertyList = new ArrayList<>();
 
         //property details
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, WebURL.PROPERTY_DETAILS_URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURL.PROPERTY_DETAILS_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 parseJSONPropertyDetails(response);
@@ -85,7 +86,18 @@ public class SearchPropertyFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        });
+        }) {
+
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put(JSONField.USER_ID, user_id);
+
+                return params;
+            }
+        };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
@@ -99,7 +111,11 @@ public class SearchPropertyFragment extends Fragment {
             int success = jsonObject.optInt(JSONField.SUCCESS);
             if (success == 1) {
                 JSONArray jsonArray = jsonObject.optJSONArray(JSONField.PROPERTY_ARRAY);
+
                 if (jsonArray.length() > 0) {
+
+                    rvProperty.setVisibility(View.VISIBLE);
+                    tvEmpty.setVisibility(View.GONE);
 
                     for (int i=0; i< jsonArray.length(); i++) {
 
@@ -136,9 +152,11 @@ public class SearchPropertyFragment extends Fragment {
                         property.setProperty_photo(propertyPhoto);
                         property.setUser_id(user_id);
 
-                        for (int j = 0; j < JSONField.propertyIdList.size(); j++) {
-                            if (propertyId.equals(JSONField.propertyIdList.get(j))) {
+                        //set bookmark per property
+                        for (int j = 0; j < Bookmark.propertyIdList.size(); j++) {
+                            if (propertyId.equals(Bookmark.propertyIdList.get(j))) {
                                 property.setBookmark(true);
+                                break;
                             }
                         }
 

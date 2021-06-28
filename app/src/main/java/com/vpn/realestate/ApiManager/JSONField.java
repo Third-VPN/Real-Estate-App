@@ -63,10 +63,18 @@ public class JSONField {
 
     //my contacted property fields
     public static final String MY_PROPERTY_CONTACT_ARRAY = "my_property_contact_array";
+    public static final String PROPERTY_CONTACT_ARRAY = "property_contact_array";
     public static final String MY_PROPERTY_ARRAY = "my_property_array";
     public static final String PROPERTY_CONTACT_ID = "property_contact_id";
     public static final String PRICE = "price";
+    public static final String OWNER_ID = "owner_id";
+    public static final String BUYER_ID = "buyer_id";
+    public static final String USER_DETAILS = "user_details";
 
-    //bookmark property list
-    public static ArrayList<String> propertyIdList = new ArrayList<>();
+    //feedback fields
+    public static final String RATING = "rating";
+    public static final String FEEDBACK = "feedback";
+
+    public static final String NEW_PASSWORD = "new_password";
+
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ContactedPropertyDetailsActivity">
+    tools:context=".MyPropertyDetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -272,12 +272,12 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnViewRes"
+                    android:id="@+id/btnViewBuyers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="20dp"
                     android:background="@drawable/background_button"
-                    android:text="View Response"
+                    android:text="View Buyers List"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -287,5 +287,6 @@
         </LinearLayout>
 
     </ScrollView>
+
 
 </LinearLayout>

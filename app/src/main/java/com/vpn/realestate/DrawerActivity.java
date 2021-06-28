@@ -8,11 +8,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -21,8 +24,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     Toolbar toolbar;
     NavigationView navigation;
     DrawerLayout drawer;
+    View navheaderView;
+    TextView tvName, tvEmail;
 
     public static final String PROFILE = "profile";
+    public static final String ID_KEY = "user_id";
+    public static final String NAME_KEY = "user_name";
+    public static final String EMAIL_KEY = "user_email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +42,23 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         drawer = findViewById(R.id.drawer);
         navigation = findViewById(R.id.nav_view);
+
+        navheaderView = navigation.getHeaderView(0);
+
+        tvName = navheaderView.findViewById(R.id.tvName);
+        tvEmail = navheaderView.findViewById(R.id.tvEmail);
+
+        SharedPreferences preferences = getSharedPreferences(PROFILE, MODE_PRIVATE);
+        String user_name = preferences.getString(NAME_KEY, "");
+        String user_email = preferences.getString(EMAIL_KEY, "");
+
+        if (!user_name.equals("") && !user_email.equals("")) {
+
+            tvName.setText(user_name);
+            tvEmail.setText(user_email);
+
+        }
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(DrawerActivity.this, drawer, toolbar,
                 R.string.navigation_view_open, R.string.navigation_view_close);
@@ -79,11 +104,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         new AddPropertyFragment()).commit();
                 break;
 
-            case R.id.nav_Bookmark:
-                this.setTitle("Bookmarks");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer,
-                        new BookmarkFragment()).commit();
-                break;
+//            case R.id.nav_Bookmark:
+//                this.setTitle("Bookmarks");
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer,
+//                        new BookmarkFragment()).commit();
+//                break;
 
             case R.id.nav_Activity:
                 this.setTitle("My Activity Log");
@@ -95,6 +120,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 this.setTitle("My Profile");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer,
                         new MyProfileFragment()).commit();
+                break;
+
+            case R.id.nav_ChangePassword:
+                this.setTitle("Change Password");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer,
+                        new ChangePasswordFragment()).commit();
                 break;
 
             case R.id.nav_RateUs:

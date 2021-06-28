@@ -1,19 +1,15 @@
 package com.vpn.realestate;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.vpn.realestate.Adapters.BuyersAdapter;
 import com.vpn.realestate.Adapters.PropertyContactAdapter;
 import com.vpn.realestate.ApiManager.JSONField;
 import com.vpn.realestate.ApiManager.WebURL;
@@ -35,51 +32,42 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ContactedPropertyFragment extends Fragment {
+public class ViewBuyersActivity extends AppCompatActivity {
     TextView tvEmpty;
-    RecyclerView rvContProperty;
+    RecyclerView rvBuyers;
 
-    public static final String PROFILE = "profile";
-    public static final String ID_KEY = "user_id";
+    ArrayList<PropertyContact> buyerList = new ArrayList<>();
 
-    String user_id;
+    String propertyId;
 
-    ArrayList<PropertyContact> contactList;
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contacted_property, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //hide action bar
+        getSupportActionBar().hide();
+        setContentView(R.layout.activity_view_buyers);
 
-        tvEmpty = view.findViewById(R.id.tvEmpty);
+        tvEmpty = findViewById(R.id.tvEmpty);
 
-        rvContProperty = view.findViewById(R.id.rvContProperty);
+        rvBuyers = findViewById(R.id.rvBuyers);
 
-        //set recycler view layout
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        rvContProperty.setLayoutManager(manager);
+        Intent intent = getIntent();
+        propertyId = intent.getStringExtra("ID");
 
-        SharedPreferences preferences = getContext().getSharedPreferences(PROFILE, Context.MODE_PRIVATE);
-        user_id = preferences.getString(ID_KEY, "");
+        LinearLayoutManager manager = new LinearLayoutManager(ViewBuyersActivity.this);
+        rvBuyers.setLayoutManager(manager);
 
-        if (!user_id.equals("")) {
+        getBuyersList();
 
-            //set property details
-            getMyContactedPropertyDetails();
-
-        }
-
-        return view;
     }
 
-    private void getMyContactedPropertyDetails() {
+    private void getBuyersList() {
 
-        contactList = new ArrayList<PropertyContact>();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURL.PROPERTY_CONTACT_DETAILS_URL, new Response.Listener<String>() {
+        //get buyer list
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURL.BUYER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                parseJSONMyContactedProperties(response);
+                parseJSONBuyersList(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -91,19 +79,20 @@ public class ContactedPropertyFragment extends Fragment {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
 
-                params.put(JSONField.USER_ID, user_id);
+                HashMap<String, String> params = new HashMap<>();
+                params.put(JSONField.PROPERTY_ID, propertyId);
 
                 return params;
+
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(ViewBuyersActivity.this);
         requestQueue.add(stringRequest);
 
     }
 
-    private void parseJSONMyContactedProperties(String response) {
+    private void parseJSONBuyersList(String response) {
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -114,14 +103,14 @@ public class ContactedPropertyFragment extends Fragment {
 
             if (success == 1) {
 
-                JSONArray jsonArray = jsonObject.optJSONArray(JSONField.MY_PROPERTY_CONTACT_ARRAY);
+                JSONArray jsonArray = jsonObject.optJSONArray(JSONField.PROPERTY_CONTACT_ARRAY);
 
                 if (jsonArray.length() > 0) {
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    rvBuyers.setVisibility(View.VISIBLE);
+                    tvEmpty.setVisibility(View.GONE);
 
-                        rvContProperty.setVisibility(View.VISIBLE);
-                        tvEmpty.setVisibility(View.GONE);
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
                         JSONObject contObj = jsonArray.optJSONObject(i);
 
@@ -138,16 +127,15 @@ public class ContactedPropertyFragment extends Fragment {
                         propertyContact.setUser_id(user_id);
                         propertyContact.setProperty_id(property_id);
 
-                        contactList.add(propertyContact);
+                        buyerList.add(propertyContact);
 
                     }
-                    PropertyContactAdapter adapter = new PropertyContactAdapter(getContext(), contactList);
-                    rvContProperty.setAdapter(adapter);
+                    BuyersAdapter adapter = new BuyersAdapter(ViewBuyersActivity.this, buyerList, propertyId);
+                    rvBuyers.setAdapter(adapter);
 
                 }
 
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();

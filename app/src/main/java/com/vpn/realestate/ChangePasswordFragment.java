@@ -1,13 +1,13 @@
 package com.vpn.realestate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,46 +30,53 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RateUsFragment extends Fragment {
-    RatingBar rbFeedback;
-    EditText etFeedback;
-    Button btnSubmit;
+import static android.content.Context.MODE_PRIVATE;
 
-    float rating;
-    String feedback;
+public class ChangePasswordFragment extends Fragment {
+    EditText etOldPassword, etNewPassword, etNewConPassword;
+    Button btnDone;
+
+    public static final String PROFILE = "profile";
+    public static final String ID_KEY = "user_id";
+
+    String user_id;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_rate_us, container, false);
+        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
 
-        rbFeedback = view.findViewById(R.id.rbFeedback);
+        etOldPassword = view.findViewById(R.id.etOldPassword);
+        etNewPassword = view.findViewById(R.id.etNewPassword);
+        etNewConPassword = view.findViewById(R.id.etNewConPassword);
 
-        etFeedback = view.findViewById(R.id.etFeedback);
+        btnDone = view.findViewById(R.id.btnDone);
 
-        btnSubmit = view.findViewById(R.id.btnSubmit);
+        SharedPreferences preferences = getActivity().getSharedPreferences(PROFILE, MODE_PRIVATE);
+        user_id = preferences.getString(ID_KEY, "");
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!etOldPassword.getText().toString().trim().equals("") &&
+                !etNewPassword.getText().toString().trim().equals("") &&
+                etNewConPassword.getText().toString().trim().equals(etNewPassword.getText().toString().trim())) {
 
-                rating = rbFeedback.getRating();
-                feedback = etFeedback.getText().toString();
+                    changePasswordRequest();
 
-                sendFeedback();
-
+                }
             }
         });
 
         return view;
     }
 
-    private void sendFeedback() {
+    private void changePasswordRequest() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURL.FEEDBACK_URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURL.PASSWORD_CHANGE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                parseJSONFeedback(response);
+                parseJSONChangePassword(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -83,11 +90,11 @@ public class RateUsFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 HashMap<String, String> params = new HashMap<>();
-                params.put(JSONField.RATING, String.valueOf(rating));
-                params.put(JSONField.FEEDBACK, feedback);
+                params.put(JSONField.USER_ID, user_id);
+                params.put(JSONField.USER_PASSWORD, etOldPassword.getText().toString().trim());
+                params.put(JSONField.NEW_PASSWORD, etNewPassword.getText().toString().trim());
 
                 return params;
-
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -95,7 +102,7 @@ public class RateUsFragment extends Fragment {
 
     }
 
-    private void parseJSONFeedback(String response) {
+    private void parseJSONChangePassword(String response) {
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -104,11 +111,17 @@ public class RateUsFragment extends Fragment {
             if (success == 1) {
 
                 String msg = jsonObject.optString(JSONField.MSG);
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+//                getChildFragmentManager().beginTransaction().replace(R.id.fragContainer,
+//                        new SearchPropertyFragment()).commit();
 
                 Intent intent = new Intent(getContext(), DrawerActivity.class);
                 startActivity(intent);
+
+            } else {
+                String msg = jsonObject.optString(JSONField.MSG);
+                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
             }
 
 
