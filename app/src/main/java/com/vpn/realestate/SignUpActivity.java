@@ -373,7 +373,7 @@ public class SignUpActivity extends AppCompatActivity {
         } else if (Pattern.compile(PASSWORD_PATTERN).matcher(etPassword.getText().toString().trim()).matches()) {
             isValidPassword = true;
         } else {
-            etPassword.setError("Enter Correct Password");
+            etPassword.setError("Enter Strong Password");
         }
 
         return isValidPassword;
@@ -391,7 +391,7 @@ public class SignUpActivity extends AppCompatActivity {
                 && etPassword.getText().toString().equals(etConPassword.getText().toString())) {
             isValidConPassword = true;
         } else {
-            etConPassword.setError("Enter Correct Password");
+            etConPassword.setError("Confirm Password must match with Password");
         }
 
         return isValidConPassword;

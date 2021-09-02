@@ -99,9 +99,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 break;
 
             case R.id.nav_add:
-                this.setTitle("Add Your Property");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer,
-                        new AddPropertyFragment()).commit();
+                Intent intent = new Intent(DrawerActivity.this, FinalAddPropertyActivity.class);
+                startActivity(intent);
+//                this.setTitle("Add Your Property");
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragContainer,
+//                        new AddPropertyFragment()).commit();
                 break;
 
 //            case R.id.nav_Bookmark:
@@ -149,7 +151,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                         editor.clear();
                         editor.commit();
 
-                        Toast.makeText(DrawerActivity.this, "Loged out", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DrawerActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
                         finish();
                         Intent intent = new Intent(DrawerActivity.this, SignInActivity.class);
                         startActivity(intent);

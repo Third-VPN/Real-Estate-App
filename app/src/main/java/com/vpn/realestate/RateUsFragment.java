@@ -56,7 +56,13 @@ public class RateUsFragment extends Fragment {
                 rating = rbFeedback.getRating();
                 feedback = etFeedback.getText().toString();
 
-                sendFeedback();
+                if (rating != 0 && !feedback.equals("")) {
+
+                    sendFeedback();
+
+                } else {
+                    Toast.makeText(getContext(), "Please rate first", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

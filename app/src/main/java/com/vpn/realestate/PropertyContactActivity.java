@@ -71,7 +71,7 @@ public class PropertyContactActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(PropertyContactActivity.this, "Please Enter Details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PropertyContactActivity.this, "Enter Valid Details", Toast.LENGTH_SHORT).show();
                 }
 
             }

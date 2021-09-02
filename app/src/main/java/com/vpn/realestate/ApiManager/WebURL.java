@@ -2,9 +2,13 @@ package com.vpn.realestate.ApiManager;
 
 public class WebURL {
 
+    //live url
+    private static final String IP_ADDRESS = "functionalist-jurie.000webhostapp.com";
+    public static final String MAIN_URL = "https://" + IP_ADDRESS + "/APIs/";
+
     //hosting url
-    private static final String IP_ADDRESS = "192.168.43.244";
-    public static final String MAIN_URL = "http://" + IP_ADDRESS + "/Real Estate Admin Panel/Real Estate Admin Panel/APIs/";
+//    private static final String IP_ADDRESS = "192.168.43.244";
+//    public static final String MAIN_URL = "http://" + IP_ADDRESS + "/Real Estate Admin Panel/Real Estate Admin Panel/APIs/";
 
     //registration api insert
     public static final String SIGN_UP_URL = MAIN_URL + "signup.php";

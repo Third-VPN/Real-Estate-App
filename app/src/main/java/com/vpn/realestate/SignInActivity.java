@@ -96,7 +96,7 @@ public class SignInActivity extends AppCompatActivity {
                     sendSignInRequest();
 
                 } else {
-                    Toast.makeText(SignInActivity.this, "Enter Valid Details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, "Enter Valid Password", Toast.LENGTH_SHORT).show();
                 }
 
             }

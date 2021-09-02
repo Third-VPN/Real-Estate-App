@@ -439,7 +439,7 @@ public class EditPropertyActivity extends AppCompatActivity implements View.OnCl
                     updatePropertyDetails();
 
                 } else {
-                    Toast.makeText(this, "Enter Details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Enter All Details", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
